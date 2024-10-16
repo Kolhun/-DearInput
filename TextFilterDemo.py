@@ -19,26 +19,22 @@ dataCategory = [
 #gggg
 TABLE_TAG = "tagTableWorkPopup"
 def _truncate_string_low(s, length):
-    """Обрезает строку до заданной длины и добавляет '...' при необходимости."""
     return s if len(s) <= length else s[:length] + '...'
 
 
 def _setValuePop(sender, app_data, user_data):
-    """Обработчик выбора элемента из таблицы."""
     index, key, data_id = user_data
     print(f"Выбран ID: {data_id}, ключ: {key}")
     #dpg.delete_item(item=popup_tag)
 
 
 def _filter_table(filter_text, table_tag, original_data):
-    """Фильтрует данные и обновляет таблицу в соответствии с введённым текстом."""
-    # Приведение текста к нижнему регистру для нечувствительной фильтрации
+
     filter_text = filter_text.lower()
 
-    # Очистка текущих строк таблицы
+
     dpg.delete_item(table_tag, children_only=True)
 
-    # Фильтрация данных
     for index, (key, data) in enumerate(original_data.items()):
         if filter_text in data["name"].lower():
             with dpg.table_row(parent=table_tag, filter_key=data["name"]):
@@ -56,28 +52,19 @@ def _filter_table(filter_text, table_tag, original_data):
 
 
 def _on_input_change(sender, app_data, user_data):
-    """Обработчик изменения текста в поле ввода для фильтрации."""
 
     input_text = dpg.get_value("input_text")
 
-    # Преобразуем введенный текст в кириллицу
     converted_text = cyrillic_support.decode_string(input_text)
-
-    # Получаем код символов для преобразованного текста
     input_char_codes = [ord(char) for char in converted_text]
-
-    # Получаем код символов для слова "Москва"
     moscow_char_codes = [ord(char) for char in "Москва"]
 
-    # Выводим коды символов в консоль
     print(
         f"Введенный текст: {input_text} -> Преобразованный текст: {converted_text} -> Код символов: {input_char_codes}")
     print(f"Слово 'Москва' -> Код символов: {moscow_char_codes}")
 
-    # Получаем отфильтрованные данные
     filtered_data = filter_data(converted_text)
 
-    # Сортируем по имени и выводим результаты
     sorted_results = sorted(filtered_data, key=lambda x: x["name"])
 
     print("Результаты фильтрации и сортировки:")
@@ -89,8 +76,6 @@ def _on_input_change(sender, app_data, user_data):
 
 def table_update(_list: list):
 
-
-    # Удаляем существующую таблицу, если она есть
     if dpg.does_item_exist(TABLE_TAG):
         dpg.delete_item(item=TABLE_TAG)
 
@@ -100,9 +85,6 @@ def table_update(_list: list):
             dpg.add_theme_color(dpg.mvThemeCol_HeaderActive, (0, 0, 0, 0), category=dpg.mvThemeCat_Core)
             dpg.add_theme_color(dpg.mvThemeCol_Header, (0, 0, 0, 0), category=dpg.mvThemeCat_Core)
 
-
-
-    # Создаём таблицу
     with dpg.table(
         header_row=True,
         no_host_extendX=True,
@@ -126,7 +108,6 @@ def table_update(_list: list):
         dpg.add_table_column(label="ID")
         dpg.add_table_column(label="Имя")
 
-        # Заполнение таблицы первоначальными данными
         for data in _list:
             with dpg.table_row(parent=TABLE_TAG, filter_key=data["name"]):
                 for j in range(2):
@@ -139,7 +120,6 @@ def table_update(_list: list):
                         span_columns=True,
                     )
 
-    # Применяем тему к таблице
     dpg.bind_item_theme(table_sel_rowss, table_theme)
     print()
 
@@ -155,24 +135,15 @@ def filter_data(search_string):
 def on_button_click(sender, app_data):
     input_text = dpg.get_value("input_text")
 
-    # Преобразуем введенный текст в кириллицу
     converted_text = cyrillic_support.decode_string(input_text)
-
-    # Получаем код символов для преобразованного текста
     input_char_codes = [ord(char) for char in converted_text]
-
-    # Получаем код символов для слова "Москва"
     moscow_char_codes = [ord(char) for char in "Москва"]
-
-    # Выводим коды символов в консоль
     print(
         f"Введенный текст: {input_text} -> Преобразованный текст: {converted_text} -> Код символов: {input_char_codes}")
     print(f"Слово 'Москва' -> Код символов: {moscow_char_codes}")
 
-    # Получаем отфильтрованные данные
     filtered_data = filter_data(converted_text)
 
-    # Сортируем по имени и выводим результаты
     sorted_results = sorted(filtered_data, key=lambda x: x["name"])
 
     print("Результаты фильтрации и сортировки:")
@@ -185,8 +156,6 @@ class CyrillicSupport:
     big_let_end = 0x00DF
     small_let_end = 0x00FF
     remap_big_let = 0x0410
-#ddddqweqw
-#23423423
     alph_len = big_let_end - big_let_start + 1
     alph_shift = remap_big_let - big_let_start
 
@@ -238,7 +207,7 @@ class CyrillicSupport:
 
 def main():
     dpg.create_context()
-    global cyrillic_support  # Объявляем глобальной переменной для доступа в функции
+    global cyrillic_support
     cyrillic_support = CyrillicSupport(os.getcwd())
     cyrillic_support.registry_font()
 
