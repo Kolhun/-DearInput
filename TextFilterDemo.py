@@ -226,7 +226,7 @@ def main():
         # dpg.add_input_text(label="Введите текст:", tag="input_text")
 
 
-    dpg.create_viewport(title='Пример DearPyGui', width=1024, height=768)
+    dpg.create_viewport(title='DearInput', width=1024, height=768)
     dpg.setup_dearpygui()
     dpg.show_viewport()
     dpg.start_dearpygui()
