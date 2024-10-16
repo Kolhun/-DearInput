@@ -1,6 +1,6 @@
 # DearInput
 
-![Альтернативный текст]([URL_изображения](https://github.com/Kolhun/DearInput/blob/main/dearinput.png))
+![Альтернативный текст](https://postimg.cc/KkzP6ZmC)
 ![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 ## Description
