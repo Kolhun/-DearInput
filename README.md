@@ -5,7 +5,7 @@
 
 ## Description
 
-Example of sorting dearpygui (dpg.add_input_text) text input russian in an field based on the [DearPyGui](https://github.com/hoffstadt/DearPyGui) library
+Example of sorting (dpg.add_input_text) dearpygui russian text input fields in based on the [DearPyGui](https://github.com/hoffstadt/DearPyGui) library
 
 ![screen.png](https://github.com/Kolhun/DearInput/blob/main/screen.png)
 
